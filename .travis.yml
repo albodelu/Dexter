@@ -1,12 +1,31 @@
 language: android
 
+env:
+  global:
+    - ANDROID_API_LEVEL=23
+    - ANDROID_ABI=default/armeabi-v7a
+
 android:
   components:
+    - platform-tools
+    - tools
     - build-tools-23.0.1
-    - android-23
+    - android-$ANDROID_API_LEVEL
     - extra-android-support
     - extra-google-m2repository
     - extra-android-m2repository
+    - addon-google_apis-google-$ANDROID_API_LEVEL
+    - sys-img-armeabi-v7a-addon-google_apis-google-$ANDROID_API_LEVEL
+    - sys-img-armeabi-v7a-android-$ANDROID_API_LEVEL
+
+before_script:
+  - echo no | android create avd --force -n test -t android-$ANDROID_API_LEVEL --abi $ANDROID_ABI
+  - emulator -avd test -no-skin -no-audio -no-window &
+  - android-wait-for-emulator
+  - adb shell settings put global window_animation_scale 0 &
+  - adb shell settings put global transition_animation_scale 0 &
+  - adb shell settings put global animator_duration_scale 0 &
 
 script:
-  ./gradlew checkstyle build
+  - ./gradlew checkstyle build
+  - ./uitests.sh

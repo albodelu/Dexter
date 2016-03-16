@@ -16,59 +16,74 @@
 
 package com.karumi.dexter.sample;
 
-import android.support.test.rule.ActivityTestRule;
+import android.content.Context;
+import android.content.Intent;
 import android.support.test.runner.AndroidJUnit4;
 import android.support.test.uiautomator.By;
 import android.support.test.uiautomator.UiDevice;
-import android.support.test.uiautomator.UiObject;
-import android.support.test.uiautomator.UiObject2;
 import android.support.test.uiautomator.UiObjectNotFoundException;
 import android.support.test.uiautomator.UiSelector;
-import java.io.IOException;
+import android.support.test.uiautomator.Until;
 import org.junit.Before;
-import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
 import static android.support.test.InstrumentationRegistry.getInstrumentation;
-import static android.support.test.espresso.Espresso.onView;
-import static android.support.test.espresso.action.ViewActions.click;
-import static android.support.test.espresso.matcher.ViewMatchers.withId;
+import static android.support.test.InstrumentationRegistry.getTargetContext;
 
-@RunWith(AndroidJUnit4.class)
-public class SampleActivityTest {
+@RunWith(AndroidJUnit4.class) public class SampleActivityTest {
 
-  @Rule
-  public ActivityTestRule<SampleActivity> mActivityRule =
-      new ActivityTestRule<>(SampleActivity.class);
+  private static final String PACKAGE = "com.karumi.dexter.sample";
+  private UiDevice device;
 
   @Before public void setUp() throws Exception {
-    UiDevice device = UiDevice.getInstance(getInstrumentation());
-    device.findObject(new UiSelector().text("Settings")).click();
-    device.findObject(new UiSelector().text("Permissions")).click();
-    for (UiObject2 switchButton : device.findObjects(By.clazz("android.widget.Switch"))) {
-      if (!switchButton.isChecked()) {
-        switchButton.click();
-      }
-      switchButton.click();
-    }
-    device.pressBack();
-    device.pressBack();
+    device = UiDevice.getInstance(getInstrumentation());
+    Context context = getTargetContext();
+    final Intent intent = context.getPackageManager().getLaunchIntentForPackage(PACKAGE);
+    intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK);
+    context.startActivity(intent);
+    device.wait(Until.hasObject(By.pkg(PACKAGE).depth(0)), 5000);
   }
 
-  @Test
-  public void buttonShouldUpdateText() throws UiObjectNotFoundException, IOException {
-    onView(withId(R.id.camera_permission_button)).perform(click());
-    UiDevice.getInstance(getInstrumentation()).executeShellCommand("adb shell revoke com.karumi.dexter.sample android.permission.CAMERA");
-    UiDevice device = UiDevice.getInstance(getInstrumentation());
+  @Test public void onGrantCameraPermissionThenFeedbackTextShowsItsGranted() throws Exception {
+    whenCameraButtonIsClicked();
+    whenCameraPermissionIsGranted();
+
+    thenCameraFeedbackShowsPermissionGranted();
+  }
+
+  @Test public void onDenyCameraPermissionThenFeedbackTextShowsItsDenied() throws Exception {
+    whenCameraButtonIsClicked();
+    whenCameraPermissionIsDenied();
+
+    thenCameraFeedbackShowsPermissionDenied();
+  }
+
+  private void whenCameraButtonIsClicked() throws UiObjectNotFoundException {
+    device.findObject(getSelectorWithText(R.string.ask_for_camera_permission_button)).click();
+  }
+
+  private void whenCameraPermissionIsGranted() throws Exception {
     device.findObject(new UiSelector().text("Allow")).click();
   }
 
-  @Test
-  public void buttonShouldUpdateTextNope() throws UiObjectNotFoundException {
-    onView(withId(R.id.camera_permission_button)).perform(click());
-    UiDevice device = UiDevice.getInstance(getInstrumentation());
-    UiObject object = device.findObject(new UiSelector().text("Deny"));
-    object.click();
+  private void whenCameraPermissionIsDenied() throws Exception {
+    device.findObject(new UiSelector().text("Deny")).click();
+  }
+
+  private void thenCameraFeedbackShowsPermissionGranted() throws UiObjectNotFoundException {
+    device.findObject(getSelectorWithText(R.string.permission_granted_feedback));
+  }
+
+  private void thenCameraFeedbackShowsPermissionDenied() throws UiObjectNotFoundException {
+    device.findObject(getSelectorWithText(R.string.permission_denied_feedback));
+  }
+
+  private UiSelector getSelectorWithText(int resId) {
+    return new UiSelector().text(getString(resId));
+  }
+
+  private String getString(int resId) {
+    return getTargetContext().getString(resId);
   }
 }
