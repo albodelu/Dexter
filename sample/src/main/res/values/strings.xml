@@ -20,6 +20,15 @@
   <string name="ask_for_contacts_permission_button">Contacts</string>
   <string name="ask_for_audio_permission_button">Audio</string>
   <string name="ask_for_all_permissions_button">Request all</string>
+  <string name="camera_permission_granted">CAMERA GRANTED</string>
+  <string name="contacts_permission_granted">CONTACTS GRANTED</string>
+  <string name="audio_permission_granted">AUDIO GRANTED</string>
+  <string name="camera_permission_denied">CAMERA DENIED</string>
+  <string name="contacts_permission_denied">CONTACTS DENIED</string>
+  <string name="audio_permission_denied">AUDIO DENIED</string>
+  <string name="camera_permission_permanently_denied">CAMERA PERMANENTLY DENIED</string>
+  <string name="contacts_permission_permanently_denied">CONTACTS PERMANENTLY DENIED</string>
+  <string name="audio_permission_permanently_denied">AUDIO PERMANENTLY DENIED</string>
   <string name="permission_granted_feedback">GRANTED</string>
   <string name="permission_denied_feedback">DENIED</string>
   <string name="permission_permanently_denied_feedback">PERMANENTLY DENIED</string>

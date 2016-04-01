@@ -33,28 +33,63 @@ import static android.support.test.InstrumentationRegistry.getTargetContext;
 
 @RunWith(AndroidJUnit4.class) public class SampleActivityTest {
 
-  private static final String PACKAGE = "com.karumi.dexter.sample";
+  private static final String TESTING_PACKAGE = "com.karumi.dexter.sample";
+  private static final int APPLICATION_START_TIMEOUT = 5000;
+  private static final int WAIT_TIMEOUT = 5000;
+
   private UiDevice device;
 
   @Before public void setUp() throws Exception {
     device = UiDevice.getInstance(getInstrumentation());
     Context context = getTargetContext();
-    final Intent intent = context.getPackageManager().getLaunchIntentForPackage(PACKAGE);
+    final Intent intent = context.getPackageManager().getLaunchIntentForPackage(TESTING_PACKAGE);
     intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK);
     context.startActivity(intent);
-    device.wait(Until.hasObject(By.pkg(PACKAGE).depth(0)), 5000);
+    device.wait(Until.hasObject(By.pkg(TESTING_PACKAGE).depth(0)), APPLICATION_START_TIMEOUT);
   }
 
-  @Test public void onGrantCameraPermissionThenFeedbackTextShowsItsGranted() throws Exception {
+  @Test public void onGrantPermissionOnBackgroundThreadThenPermissionIsGranted() throws Exception {
     whenCameraButtonIsClicked();
-    whenCameraPermissionIsGranted();
+    whenPermissionIsGranted();
 
     thenCameraFeedbackShowsPermissionGranted();
   }
 
-  @Test public void onDenyCameraPermissionThenFeedbackTextShowsItsDenied() throws Exception {
+  @Test public void onDenyPermissionOnBackgroundThreadThenPermissionIsDenied() throws Exception {
     whenCameraButtonIsClicked();
-    whenCameraPermissionIsDenied();
+    whenPermissionIsDenied();
+
+    thenCameraFeedbackShowsPermissionDenied();
+  }
+
+  @Test public void onGrantPermissionOnMainThreadThenPermissionIsGranted() throws Exception {
+    whenContactsButtonIsClicked();
+    whenPermissionIsGranted();
+
+    thenCameraFeedbackShowsPermissionGranted();
+  }
+
+  @Test public void onDenyPermissionOnMainThreadThenPermissionIsDenied() throws Exception {
+    whenContactsButtonIsClicked();
+    whenPermissionIsDenied();
+
+    thenCameraFeedbackShowsPermissionDenied();
+  }
+
+  @Test public void onDenyPermissionThenRationaleIsShownInNextRequest() throws Exception {
+    whenCameraButtonIsClicked();
+    whenPermissionIsDenied();
+    whenCameraButtonIsClicked();
+
+    thenRationaleIsShown();
+  }
+
+  @Test public void onRotateDeviceWhileRequestingPermissionThenPermissionIsStillRequested()
+      throws Exception {
+    whenCameraButtonIsClicked();
+    device.setOrientationLeft();
+
+    whenPermissionIsDenied();
 
     thenCameraFeedbackShowsPermissionDenied();
   }
@@ -63,20 +98,28 @@ import static android.support.test.InstrumentationRegistry.getTargetContext;
     device.findObject(getSelectorWithText(R.string.ask_for_camera_permission_button)).click();
   }
 
-  private void whenCameraPermissionIsGranted() throws Exception {
+  private void whenContactsButtonIsClicked() throws UiObjectNotFoundException {
+    device.findObject(getSelectorWithText(R.string.ask_for_contacts_permission_button)).click();
+  }
+
+  private void whenPermissionIsGranted() throws Exception {
     device.findObject(new UiSelector().text("Allow")).click();
   }
 
-  private void whenCameraPermissionIsDenied() throws Exception {
+  private void whenPermissionIsDenied() throws Exception {
     device.findObject(new UiSelector().text("Deny")).click();
   }
 
+  private void thenRationaleIsShown() throws Exception {
+    device.findObject(getSelectorWithText(R.string.permission_rationale_message));
+  }
+
   private void thenCameraFeedbackShowsPermissionGranted() throws UiObjectNotFoundException {
-    device.findObject(getSelectorWithText(R.string.permission_granted_feedback));
+    device.findObject(getSelectorWithText(R.string.camera_permission_granted));
   }
 
   private void thenCameraFeedbackShowsPermissionDenied() throws UiObjectNotFoundException {
-    device.findObject(getSelectorWithText(R.string.permission_denied_feedback));
+    device.findObject(getSelectorWithText(R.string.camera_permission_denied));
   }
 
   private UiSelector getSelectorWithText(int resId) {

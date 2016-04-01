@@ -38,6 +38,8 @@ import com.karumi.dexter.listener.single.CompositePermissionListener;
 import com.karumi.dexter.listener.single.DialogOnDeniedPermissionListener;
 import com.karumi.dexter.listener.single.PermissionListener;
 import com.karumi.dexter.listener.single.SnackbarOnDeniedPermissionListener;
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  * Sample activity showing the permission request process with Dexter.
@@ -53,12 +55,14 @@ public class SampleActivity extends Activity {
   private PermissionListener cameraPermissionListener;
   private PermissionListener contactsPermissionListener;
   private PermissionListener audioPermissionListener;
+  private Map<String, PermissionViewConfiguration> permissionViewConfigurations;
 
   @Override protected void onCreate(Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
     setContentView(R.layout.sample_activity);
     ButterKnife.bind(this);
     createPermissionListeners();
+    initializePermissionViewConfigurations();
     /*
      * If during the rotate screen process the activity has been restarted you can call this method
      * to start with the check permission process without keep in an Android Bundle the state of
@@ -125,17 +129,20 @@ public class SampleActivity extends Activity {
   }
 
   public void showPermissionGranted(String permission) {
-    TextView feedbackView = getFeedbackViewForPermission(permission);
-    feedbackView.setText(R.string.permission_granted_feedback);
-    feedbackView.setTextColor(ContextCompat.getColor(this, R.color.permission_granted));
+    PermissionViewConfiguration configuration = permissionViewConfigurations.get(permission);
+    configuration.feedbackView.setText(configuration.grantedPermissionText);
+    configuration.feedbackView.setTextColor(
+        ContextCompat.getColor(this, R.color.permission_granted));
   }
 
   public void showPermissionDenied(String permission, boolean isPermanentlyDenied) {
-    TextView feedbackView = getFeedbackViewForPermission(permission);
-    feedbackView.setText(isPermanentlyDenied
-        ? R.string.permission_permanently_denied_feedback
-        : R.string.permission_denied_feedback);
-    feedbackView.setTextColor(ContextCompat.getColor(this, R.color.permission_denied));
+    PermissionViewConfiguration configuration = permissionViewConfigurations.get(permission);
+    String feedbackText = isPermanentlyDenied ?
+        configuration.permanentlyDeniedPermissionText :
+        configuration.deniedPermissionText;
+    configuration.feedbackView.setText(feedbackText);
+    configuration.feedbackView.setTextColor(
+        ContextCompat.getColor(this, R.color.permission_denied));
   }
 
   private void createPermissionListeners() {
@@ -167,23 +174,56 @@ public class SampleActivity extends Activity {
     cameraPermissionListener = new SampleBackgroundThreadPermissionListener(this);
   }
 
+  private String getGrantedFeedbackTextForPermission(String name) {
+    Map<String, Integer> grantedFeedbackTextForPermission = new HashMap<>();
+    grantedFeedbackTextForPermission.put(Manifest.permission.CAMERA,
+        R.string.camera_permission_granted);
+    grantedFeedbackTextForPermission.put(Manifest.permission.READ_CONTACTS,
+        R.string.contacts_permission_granted);
+    grantedFeedbackTextForPermission.put(Manifest.permission.RECORD_AUDIO,
+        R.string.audio_permission_granted);
+    return getString(grantedFeedbackTextForPermission.get(name));
+  }
+
   private TextView getFeedbackViewForPermission(String name) {
-    TextView feedbackView;
+    Map<String, TextView> viewForPermission = new HashMap<>();
+    viewForPermission.put(Manifest.permission.CAMERA, cameraPermissionFeedbackView);
+    viewForPermission.put(Manifest.permission.READ_CONTACTS, contactsPermissionFeedbackView);
+    viewForPermission.put(Manifest.permission.RECORD_AUDIO, audioPermissionFeedbackView);
+    return viewForPermission.get(name);
+  }
 
-    switch (name) {
-      case Manifest.permission.CAMERA:
-        feedbackView = cameraPermissionFeedbackView;
-        break;
-      case Manifest.permission.READ_CONTACTS:
-        feedbackView = contactsPermissionFeedbackView;
-        break;
-      case Manifest.permission.RECORD_AUDIO:
-        feedbackView = audioPermissionFeedbackView;
-        break;
-      default:
-        throw new RuntimeException("No feedback view for this permission");
+  private void initializePermissionViewConfigurations() {
+    permissionViewConfigurations = new HashMap<>();
+    permissionViewConfigurations.put(Manifest.permission.CAMERA,
+        new PermissionViewConfiguration(cameraPermissionFeedbackView,
+            getString(R.string.camera_permission_granted),
+            getString(R.string.camera_permission_denied),
+            getString(R.string.camera_permission_permanently_denied)));
+    permissionViewConfigurations.put(Manifest.permission.READ_CONTACTS,
+        new PermissionViewConfiguration(contactsPermissionFeedbackView,
+            getString(R.string.contacts_permission_granted),
+            getString(R.string.contacts_permission_denied),
+            getString(R.string.contacts_permission_permanently_denied)));
+    permissionViewConfigurations.put(Manifest.permission.RECORD_AUDIO,
+        new PermissionViewConfiguration(audioPermissionFeedbackView,
+            getString(R.string.audio_permission_granted),
+            getString(R.string.audio_permission_denied),
+            getString(R.string.audio_permission_permanently_denied)));
+  }
+
+  private static class PermissionViewConfiguration {
+    private final TextView feedbackView;
+    private final String grantedPermissionText;
+    private final String deniedPermissionText;
+    private final String permanentlyDeniedPermissionText;
+
+    public PermissionViewConfiguration(TextView feedbackView, String grantedPermissionText,
+        String deniedPermissionText, String permanentlyDeniedPermissionText) {
+      this.feedbackView = feedbackView;
+      this.grantedPermissionText = grantedPermissionText;
+      this.deniedPermissionText = deniedPermissionText;
+      this.permanentlyDeniedPermissionText = permanentlyDeniedPermissionText;
     }
-
-    return feedbackView;
   }
 }
