@@ -18,10 +18,12 @@ env:
     - PATH=${ANDROID_HOME}/:${ANDROID_HOME}/tools/:${ANDROID_HOME}/tools/bin:${ANDROID_HOME}/platform-tools/:${PATH}
 
 before_install:
-  - ls /usr/local/
   - cp -R /usr/local/android-sdk-23.0.2 ./android-sdk
-  - bin/sdkmanager --list || true
-  - bin/sdkmanager --list --help || true
+  - echo "$PATH"
+  - ls "${ANDROID_HOME}/tools/bin
+  - ls /usr/local/
+  - sdkmanager --list || true
+  - sdkmanager --list --help || true
   - android list sdk -e || true
   - android list sdk -a -e || true
   - android list || true
