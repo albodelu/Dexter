@@ -8,6 +8,9 @@ android:
     - build-tools-25.0.2
     - platform-tools
     - tools
+    - android-23
+    - android-25
+    - sys-img-armeabi-v7a-google_apis-23
 
 env:
   global:
@@ -15,15 +18,19 @@ env:
     - PATH=${ANDROID_HOME}/:${ANDROID_HOME}/tools/:${ANDROID_HOME}/tools/bin:${ANDROID_HOME}/platform-tools/:${PATH}
 
 before_install:
-  - cp -R /usr/local/android-sdk-24.0.2 ./android-sdk
   - echo "$PATH"
-  - ls /usr/local/
+  - shopt -s dotglob
+  - mv /usr/local/android-sdk-24.0.2/* ./android-sdk
+  - ls -Al
+  - ls android-sdk -Al
   - sdkmanager --list || true
   - sdkmanager --list --help || true
-  - android list sdk -e || true
-  - android list sdk -a -e || true
-  - android list || true
-  - ls ${ANDROID_HOME}/tools/bin | true
+  - sdkmanager --update
+  - sdkmanager --list || true
+  - sdkmanager --list --help || true
+  - sdkmanager "tools"
+  - sdkmanager --list || true
+  - sdkmanager --list --help || true
 
 before_script:
   - echo no | android create avd --force -n test -t android-23 --abi armeabi-v7a --tag google_apis
