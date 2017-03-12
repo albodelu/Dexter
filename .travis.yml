@@ -9,7 +9,6 @@ android:
     - android-23
     - android-25
     - extra-android-m2repository
-    - addon-google_apis_google-23
     - sys-img-armeabi-v7a-google_apis-23
 
 before_script:
