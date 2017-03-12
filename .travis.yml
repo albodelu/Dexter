@@ -17,13 +17,13 @@ env:
 before_install:
   - cp -R /usr/local/android-sdk-24.0.2 ./android-sdk
   - echo "$PATH"
-  - ls "${ANDROID_HOME}/tools/bin
   - ls /usr/local/
   - sdkmanager --list || true
   - sdkmanager --list --help || true
   - android list sdk -e || true
   - android list sdk -a -e || true
   - android list || true
+  - ls ${ANDROID_HOME}/tools/bin | true
 
 before_script:
   - echo no | android create avd --force -n test -t android-23 --abi armeabi-v7a --tag google_apis
