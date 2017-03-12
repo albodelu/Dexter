@@ -12,7 +12,14 @@ android:
     - extra-android-m2repository
     - sys-img-armeabi-v7a-google_apis-23
 
+env:
+  global:
+    - ANDROID_HOME=${TRAVIS_BUILD_DIR}/android-sdk
+    - PATH=${ANDROID_HOME}/:${ANDROID_HOME}/tools/:${ANDROID_HOME}/tools/bin:${ANDROID_HOME}/platform-tools/:${PATH}
+
 before_install:
+  - ls /usr/local/
+  - cp -R /usr/local/android-sdk-23.0.2 ./android-sdk
   - bin/sdkmanager --list || true
   - bin/sdkmanager --list --help || true
   - android list sdk -e || true
