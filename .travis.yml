@@ -7,14 +7,14 @@ android:
     - build-tools-25.0.2
     - platform-tools
     - tools
-    - platform-tools
-    - tools
     - android-23
     - android-25
     - extra-android-m2repository
     - sys-img-armeabi-v7a-google_apis-23
 
 before_install:
+  - sdkmanager --list || true
+  - sdkmanager --list --help || true
   - android list sdk -e || true
   - android list sdk -a -e || true
   - android list || true
