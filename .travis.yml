@@ -13,8 +13,8 @@ android:
     - sys-img-armeabi-v7a-google_apis-23
 
 before_install:
-  - sdkmanager --list || true
-  - sdkmanager --list --help || true
+  - bin/sdkmanager --list || true
+  - bin/sdkmanager --list --help || true
   - android list sdk -e || true
   - android list sdk -a -e || true
   - android list || true
