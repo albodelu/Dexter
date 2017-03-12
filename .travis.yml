@@ -18,7 +18,7 @@ env:
     - PATH=${ANDROID_HOME}/:${ANDROID_HOME}/tools/:${ANDROID_HOME}/tools/bin:${ANDROID_HOME}/platform-tools/:${PATH}
 
 before_install:
-  - cp -R /usr/local/android-sdk-23.0.2 ./android-sdk
+  - cp -R /usr/local/android-sdk-24.0.2 ./android-sdk
   - echo "$PATH"
   - ls "${ANDROID_HOME}/tools/bin
   - ls /usr/local/
