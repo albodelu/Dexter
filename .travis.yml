@@ -36,6 +36,11 @@ before_install:
   - sdkmanager --uninstall "system-images;android-19;default;armeabi-v7a"
   - echo yes | sdkmanager "tools"
   - echo yes | sdkmanager "system-images;android-21;default;armeabi-v7a"
+  - echo yes | sdkmanager "extras;android;m2repository"
+  - echo yes | sdkmanager "extras;google;m2repository"
+  - echo yes | sdkmanager "extras;google;google_play_services"
+  - echo yes | sdkmanager "extras;m2repository;com;android;support;constraint;constraint-layout;1.0.2"
+  - echo yes | sdkmanager "extras;m2repository;com;android;support;constraint;constraint-layout-solver;1.0.2"
   - sdkmanager --list | true
   - avdmanager list target | true
 
