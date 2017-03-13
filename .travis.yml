@@ -13,7 +13,7 @@ android:
 env:
   global:
     - ANDROID_HOME=${TRAVIS_BUILD_DIR}/android-sdk
-    - PATH=${ANDROID_HOME}/:${ANDROID_HOME}/tools/bin:${ANDROID_HOME}/tools/:${ANDROID_HOME}/platform-tools/:${PATH}
+    - PATH=${ANDROID_HOME}/:${ANDROID_HOME}/tools/:${ANDROID_HOME}/tools/bin:${ANDROID_HOME}/platform-tools/:${PATH}
     - EMULATOR="system-images;android-21;default;armeabi-v7a"
 
 before_install:
