@@ -38,7 +38,7 @@ before_install:
   - sdkmanager --uninstall "platforms;android-20"
   - sdkmanager --uninstall "platforms;android-21"
   - sdkmanager --uninstall "build-tools;21.1.2"
-  - echo yes | sdkmanager "tools"
+#  - echo yes | sdkmanager "tools"
   - echo yes | sdkmanager "extras;android;m2repository"
   - echo yes | sdkmanager "extras;google;m2repository"
   - echo yes | sdkmanager "extras;m2repository;com;android;support;constraint;constraint-layout;1.0.2"
@@ -57,11 +57,13 @@ before_install:
   - ls /home/travis/.android/avd/ -Al
   - ls /home/travis/.android/cache/ -Al
   - cat /home/travis/.android/repositories.cfg || true
-
+  - echo 'Hello, world.' > repositories.cfg
+  - cat /home/travis/.android/repositories.cfg || true
 before_script:
-  - echo no | avdmanager create avd -n test -k "$EMULATOR" -f --abi armeabi-v7a
-#  - echo no | android create avd --force -n test -t android-23 --abi armeabi-v7a --tag google_apis
-  - emulator -avd test -no-skin -no-audio -no-window &
+#  - echo no | avdmanager create avd -n test -k "$EMULATOR" -f --abi armeabi-v7a
+  - echo no | android create avd --force -n test -t android-23 --abi armeabi-v7a --tag google_apis
+  - set QEMU_AUDIO_DRV=none
+  - emulator -avd test -no-skin -no-window &
   - android-wait-for-emulator
   - adb shell settings put global window_animation_scale 0 &
   - adb shell settings put global transition_animation_scale 0 &
