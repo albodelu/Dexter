@@ -15,7 +15,7 @@ android:
 env:
   global:
     - ANDROID_HOME=${TRAVIS_BUILD_DIR}/android-sdk
-    - PATH=${ANDROID_HOME}/:${ANDROID_HOME}/tools/:${ANDROID_HOME}/tools/bin:${ANDROID_HOME}/platform-tools/:${PATH}
+    - PATH=${ANDROID_HOME}/:${ANDROID_HOME}/tools/bin:${ANDROID_HOME}/tools/:${ANDROID_HOME}/platform-tools/:${PATH}
 
 before_install:
   - echo "$PATH"
@@ -24,15 +24,17 @@ before_install:
   - mv /usr/local/android-sdk-24.0.2/* android-sdk/
   - ls -Al
   - ls android-sdk -Al
+  - ls android-sdk/tools -Al
+  - ls android-sdk/tools/bin -Al
   - sdkmanager --list || true
   - sdkmanager --list --help || true
-  - sdkmanager --update
+  - echo y | sdkmanager --update
   - sdkmanager --list || true
   - sdkmanager --list --help || true
-  - sdkmanager "tools"
+  - echo y | sdkmanager "tools"
   - sdkmanager --list || true
   - sdkmanager --list --help || true
-  - sdkmanager "emulator"
+  - echo y | sdkmanager "emulator"
 
 before_script:
   - echo no | avdmanager create avd --force -n test -t android-23 --abi armeabi-v7a --tag google_apis
