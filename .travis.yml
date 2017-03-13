@@ -34,9 +34,11 @@ before_install:
   - sdkmanager --uninstall "system-images;android-18;default;armeabi-v7a"
   - sdkmanager --uninstall "system-images;android-19;default;armeabi-v7a"
   # - echo y | sdkmanager --update
-  - echo y | sdkmanager "tools"
+  - echo yes | sdkmanager "tools"
   - sdkmanager --list || true
-  - echo y | sdkmanager "emulator"
+  - echo yes | sdkmanager "emulator"
+  - echo yes | sdkmanager "system-images;android-21;default;armeabi-v7a"
+
   - avdmanager list target
   - avdmanager create avd --help
 
