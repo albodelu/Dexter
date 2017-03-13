@@ -25,7 +25,7 @@ before_install:
   - ls android-sdk/tools -Al
   - ls android-sdk/tools/bin -Al
   - ls /home/travis/.android/ -Al
-  - cat /home/travis/.android/repositories.cfg
+  - cat /home/travis/.android/repositories.cfg | true
   - sdkmanager --list || true
   - sdkmanager --list --help || true
   - sdkmanager --uninstall "system-images;android-15;default;armeabi-v7a"
