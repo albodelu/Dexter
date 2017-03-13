@@ -37,7 +37,7 @@ before_install:
   # - echo yes | sdkmanager --update
   - echo yes | sdkmanager "tools"
   - sdkmanager --list || true
-  - echo yes | sdkmanager "emulator"
+  # - echo yes | sdkmanager "emulator"
   - echo yes | sdkmanager "$EMULATOR"
 
   - avdmanager list target
