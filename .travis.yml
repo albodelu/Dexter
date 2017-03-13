@@ -27,16 +27,16 @@ before_install:
   - ls android-sdk/tools/bin -Al
   - ls /home/travis/.android/ -Al
   - cat /home/travis/.android/repositories.cfg | true
-  - sdkmanager --list || true
-  - sdkmanager --list --help || true
+  - sdkmanager --list | true
+  - sdkmanager --list --help | true
   - sdkmanager --uninstall "system-images;android-15;default;armeabi-v7a"
   - sdkmanager --uninstall "system-images;android-16;default;armeabi-v7a"
   - sdkmanager --uninstall "system-images;android-17;default;armeabi-v7a"
   - sdkmanager --uninstall "system-images;android-18;default;armeabi-v7a"
   - sdkmanager --uninstall "system-images;android-19;default;armeabi-v7a"
-   - echo yes | sdkmanager --update
-  - sdkmanager --list || true
-  - avdmanager list target
+  - echo yes | sdkmanager --update
+  - sdkmanager --list | true
+  - avdmanager list target | true
 
 before_script:
   - echo no | avdmanager create avd -n test -k "$EMULATOR" -f --abi armeabi-v7a
