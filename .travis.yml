@@ -34,7 +34,8 @@ before_install:
   - sdkmanager --uninstall "system-images;android-17;default;armeabi-v7a"
   - sdkmanager --uninstall "system-images;android-18;default;armeabi-v7a"
   - sdkmanager --uninstall "system-images;android-19;default;armeabi-v7a"
-  - echo yes | sdkmanager --update
+  - echo yes | sdkmanager "tools"
+  - echo yes | sdkmanager "system-images;android-21;default;armeabi-v7a"
   - sdkmanager --list | true
   - avdmanager list target | true
 
