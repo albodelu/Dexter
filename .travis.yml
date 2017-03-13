@@ -17,6 +17,22 @@ env:
     - EMULATOR="system-images;android-21;default;armeabi-v7a"
 
 before_install:
+  - sdkmanager --list | true
+  - sdkmanager --list --help | true
+  - sdkmanager --uninstall "system-images;android-15;default;armeabi-v7a"
+  - sdkmanager --uninstall "system-images;android-16;default;armeabi-v7a"
+  - sdkmanager --uninstall "system-images;android-17;default;armeabi-v7a"
+  - sdkmanager --uninstall "system-images;android-18;default;armeabi-v7a"
+  - sdkmanager --uninstall "system-images;android-19;default;armeabi-v7a"
+  - sdkmanager --uninstall "extras;google;google_play_services"
+  - echo yes | sdkmanager "tools"
+  - echo yes | sdkmanager "system-images;android-21;default;armeabi-v7a"
+  - echo yes | sdkmanager "extras;android;m2repository"
+  - echo yes | sdkmanager "extras;google;m2repository"
+  - echo yes | sdkmanager "extras;m2repository;com;android;support;constraint;constraint-layout;1.0.2"
+  - echo yes | sdkmanager "extras;m2repository;com;android;support;constraint;constraint-layout-solver;1.0.2"
+  - sdkmanager --list | true
+  - avdmanager list target | true
   - echo "$PATH"
   - shopt -s dotglob
   - mkdir android-sdk
@@ -27,22 +43,6 @@ before_install:
   - ls android-sdk/tools/bin -Al
   - ls /home/travis/.android/ -Al
   - cat /home/travis/.android/repositories.cfg | true
-  - sdkmanager --list | true
-  - sdkmanager --list --help | true
-  - sdkmanager --uninstall "system-images;android-15;default;armeabi-v7a"
-  - sdkmanager --uninstall "system-images;android-16;default;armeabi-v7a"
-  - sdkmanager --uninstall "system-images;android-17;default;armeabi-v7a"
-  - sdkmanager --uninstall "system-images;android-18;default;armeabi-v7a"
-  - sdkmanager --uninstall "system-images;android-19;default;armeabi-v7a"
-  - echo yes | sdkmanager "tools"
-  - echo yes | sdkmanager "system-images;android-21;default;armeabi-v7a"
-  - echo yes | sdkmanager "extras;android;m2repository"
-  - echo yes | sdkmanager "extras;google;m2repository"
-  - echo yes | sdkmanager "extras;google;google_play_services"
-  - echo yes | sdkmanager "extras;m2repository;com;android;support;constraint;constraint-layout;1.0.2"
-  - echo yes | sdkmanager "extras;m2repository;com;android;support;constraint;constraint-layout-solver;1.0.2"
-  - sdkmanager --list | true
-  - avdmanager list target | true
 
 before_script:
   - echo no | avdmanager create avd -n test -k "$EMULATOR" -f --abi armeabi-v7a
