@@ -19,8 +19,8 @@ env:
 #    - EMULATOR="system-images;android-21;default;armeabi-v7a"
 
 before_install:
-  - sdkmanager --list | true
-  - sdkmanager --list --help | true
+  - sdkmanager --list || true
+  - sdkmanager --list --help || true
   - sdkmanager --uninstall "system-images;android-15;default;armeabi-v7a"
   - sdkmanager --uninstall "system-images;android-16;default;armeabi-v7a"
   - sdkmanager --uninstall "system-images;android-17;default;armeabi-v7a"
@@ -33,8 +33,8 @@ before_install:
   - echo yes | sdkmanager "extras;google;m2repository"
   - echo yes | sdkmanager "extras;m2repository;com;android;support;constraint;constraint-layout;1.0.2"
   - echo yes | sdkmanager "extras;m2repository;com;android;support;constraint;constraint-layout-solver;1.0.2"
-  - sdkmanager --list | true
-  - avdmanager list | true
+  - sdkmanager --list || true
+  - avdmanager list || true
   - echo "$PATH"
   - shopt -s dotglob
   - mkdir android-sdk
@@ -44,7 +44,7 @@ before_install:
   - ls android-sdk/tools -Al
   - ls android-sdk/tools/bin -Al
   - ls /home/travis/.android/ -Al
-  - cat /home/travis/.android/repositories.cfg | true
+  - cat /home/travis/.android/repositories.cfg || true
 
 before_script:
 #  - echo no | avdmanager create avd -n test -k "$EMULATOR" -f --abi armeabi-v7a
