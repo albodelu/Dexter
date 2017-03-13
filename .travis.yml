@@ -8,13 +8,15 @@ android:
     - build-tools-25.0.2
     - platform-tools
     - tools
+    - android-23
     - android-25
+    - sys-img-armeabi-v7a-google_apis-23
 
 env:
   global:
     - ANDROID_HOME=${TRAVIS_BUILD_DIR}/android-sdk
     - PATH=${ANDROID_HOME}/:${ANDROID_HOME}/tools/:${ANDROID_HOME}/tools/bin:${ANDROID_HOME}/platform-tools/:/usr/local/android-sdk-24.0.2/tools/bin:${PATH}
-    - EMULATOR="system-images;android-21;default;armeabi-v7a"
+#    - EMULATOR="system-images;android-21;default;armeabi-v7a"
 
 before_install:
   - sdkmanager --list | true
@@ -24,15 +26,15 @@ before_install:
   - sdkmanager --uninstall "system-images;android-17;default;armeabi-v7a"
   - sdkmanager --uninstall "system-images;android-18;default;armeabi-v7a"
   - sdkmanager --uninstall "system-images;android-19;default;armeabi-v7a"
+  - sdkmanager --uninstall "system-images;android-21;default;armeabi-v7a"
   - sdkmanager --uninstall "extras;google;google_play_services"
   - echo yes | sdkmanager "tools"
-  - echo yes | sdkmanager "system-images;android-21;default;armeabi-v7a"
   - echo yes | sdkmanager "extras;android;m2repository"
   - echo yes | sdkmanager "extras;google;m2repository"
   - echo yes | sdkmanager "extras;m2repository;com;android;support;constraint;constraint-layout;1.0.2"
   - echo yes | sdkmanager "extras;m2repository;com;android;support;constraint;constraint-layout-solver;1.0.2"
   - sdkmanager --list | true
-  - avdmanager list target | true
+  - avdmanager list | true
   - echo "$PATH"
   - shopt -s dotglob
   - mkdir android-sdk
@@ -45,8 +47,9 @@ before_install:
   - cat /home/travis/.android/repositories.cfg | true
 
 before_script:
-  - echo no | avdmanager create avd -n test -k "$EMULATOR" -f --abi armeabi-v7a
-  - emulator64-arm -avd test -no-skin -no-audio -no-window &
+#  - echo no | avdmanager create avd -n test -k "$EMULATOR" -f --abi armeabi-v7a
+  - echo no | android create avd --force -n test -t android-23 --abi armeabi-v7a --tag google_apis
+  - emulator -avd test -no-skin -no-audio -no-window &
   - android-wait-for-emulator
   - adb shell settings put global window_animation_scale 0 &
   - adb shell settings put global transition_animation_scale 0 &
