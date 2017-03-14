@@ -16,9 +16,9 @@ env:
   global:
     - ANDROID_HOME=/usr/local/android-sdk-24.0.2
     - TOOLS=${ANDROID_HOME}/tools
-    - TEMP=${ANDROID_HOME}/:${TOOLS}/:${TOOLS}/bin:${TOOLS}/emulator:${ANDROID_HOME}/platform-tools
+    - TEMP=${ANDROID_HOME}:${TOOLS}:${TOOLS}/bin:${TOOLS}/emulator:${ANDROID_HOME}/platform-tools
     - PATH=${TEMP}:${PATH}
-    - EMULATOR="system-images;android-23;google_apis;armeabi-v7a"
+    - EMULATOR="system-images;android-25;google_apis;armeabi-v7a"
 
 before_install:
   - echo 'count=0' > /home/travis/.android/repositories.cfg # Avoid warning
@@ -42,13 +42,12 @@ before_install:
   - sdkmanager --uninstall "platforms;android-21"
   - sdkmanager --uninstall "build-tools;21.1.2"
 #  - echo yes | sdkmanager "tools"
-  - echo yes | sdkmanager "platforms;android-23"
   - echo yes | sdkmanager "platforms;android-25"
   - echo yes | sdkmanager "extras;android;m2repository"
   - echo yes | sdkmanager "extras;google;m2repository"
   - echo yes | sdkmanager "extras;m2repository;com;android;support;constraint;constraint-layout;1.0.2"
   - echo yes | sdkmanager "extras;m2repository;com;android;support;constraint;constraint-layout-solver;1.0.2"
-  - echo yes | sdkmanager "system-images;android-23;google_apis;armeabi-v7a"
+  - echo yes | sdkmanager "system-images;android-25;google_apis;armeabi-v7a"
   - echo "$PATH"
   - ls -Al
   - ls /usr/local/android-sdk -Al
@@ -67,7 +66,8 @@ before_install:
 
 before_script:
 #  - echo no | avdmanager create avd -n test -k "$EMULATOR" -f --abi armeabi-v7a
-  - echo no | android create avd --force -n test -t android-23 --abi google_apis/armeabi-v7a
+  - echo no | android create avd --force -n test -t android-25 --abi armeabi-v7a
+  - set QEMU_AUDIO_DRV=none
   - emulator -avd test -no-skin -no-window &
   - android-wait-for-emulator
   - adb shell settings put global window_animation_scale 0 &
