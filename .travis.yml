@@ -55,6 +55,7 @@ before_install:
   - ls ${ANDROID_HOME} -Al
   - ls ${ANDROID_HOME}/licenses -Al
   - ls ${ANDROID_HOME}/system-images -Al
+  - ls ${ANDROID_HOME}/system-images/android-23 -Al
   - ls ${TOOLS} -Al
   - ls ${TOOLS}/emulator -Al
   - ls ${TOOLS}/bin -Al
@@ -66,8 +67,7 @@ before_install:
 
 before_script:
 #  - echo no | avdmanager create avd -n test -k "$EMULATOR" -f --abi armeabi-v7a
-  - echo no | android create avd --force -n test -t android-23 --abi armeabi-v7a --tag google_apis
-  - set QEMU_AUDIO_DRV=none
+  - echo no | android create avd --force -n test -t android-23
   - emulator -avd test -no-skin -no-window &
   - android-wait-for-emulator
   - adb shell settings put global window_animation_scale 0 &
