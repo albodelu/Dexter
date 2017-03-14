@@ -8,6 +8,9 @@ android:
     - build-tools-25.0.2
     - platform-tools
     - tools
+    - android-23
+    - android-25
+    - sys-img-armeabi-v7a-google_apis-23
 
 env:
   global:
@@ -18,6 +21,7 @@ env:
     - EMULATOR="system-images;android-23;google_apis;armeabi-v7a"
 
 before_install:
+  - echo 'count=0' > /home/travis/.android/repositories.cfg
   - sdkmanager --list || true
   - sdkmanager --list --help || true
   - sdkmanager --uninstall "system-images;android-15;default;armeabi-v7a"
@@ -38,18 +42,19 @@ before_install:
   - sdkmanager --uninstall "platforms;android-21"
   - sdkmanager --uninstall "build-tools;21.1.2"
 #  - echo yes | sdkmanager "tools"
-  - echo yes | sdkmanager "platforms;android-23"
-  - echo yes | sdkmanager "platforms;android-25"
+#  - echo yes | sdkmanager "platforms;android-23"
+#  - echo yes | sdkmanager "platforms;android-25"
   - echo yes | sdkmanager "extras;android;m2repository"
   - echo yes | sdkmanager "extras;google;m2repository"
   - echo yes | sdkmanager "extras;m2repository;com;android;support;constraint;constraint-layout;1.0.2"
   - echo yes | sdkmanager "extras;m2repository;com;android;support;constraint;constraint-layout-solver;1.0.2"
-  - echo yes | sdkmanager "system-images;android-23;google_apis;armeabi-v7a"
+#  - echo yes | sdkmanager "system-images;android-23;google_apis;armeabi-v7a"
   - echo "$PATH"
 #  - shopt -s dotglob
 #  - mkdir android-sdk
 #  - mv /usr/local/android-sdk-24.0.2/* android-sdk/
   - ls -Al
+  - ls /usr/local/android-sdk -Al
   - ls ${ANDROID_HOME} -Al
   - ls ${TOOLS} -Al
   - ls ${TOOLS}/emulator -Al
@@ -57,9 +62,6 @@ before_install:
   - ls /home/travis/.android/ -Al
   - ls /home/travis/.android/avd/ -Al
   - ls /home/travis/.android/cache/ -Al
-  - cat /home/travis/.android/repositories.cfg || true
-  - echo 'count=0' > /home/travis/.android/repositories.cfg
-  - cat /home/travis/.android/repositories.cfg || true
   - sdkmanager --list || true
 #  - avdmanager list || true
 
