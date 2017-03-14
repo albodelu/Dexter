@@ -11,10 +11,10 @@ android:
 
 env:
   global:
-    - ANDROID_HOME=${TRAVIS_BUILD_DIR}/android-sdk
+    - ANDROID_HOME=/usr/local/android-sdk-24.0.2
     - TOOLS=${ANDROID_HOME}/tools
     - TEMP=${ANDROID_HOME}/:${TOOLS}/:${TOOLS}/bin:${TOOLS}/emulator:${ANDROID_HOME}/platform-tools/
-    - PATH=${TEMP}:/usr/local/android-sdk-24.0.2/tools/bin:/usr/local/android-sdk-24.0.2/tools/emulator:${PATH}
+    - PATH=${TEMP}:${PATH}
     - EMULATOR="system-images;android-23;google_apis;armeabi-v7a"
 
 before_install:
@@ -46,14 +46,14 @@ before_install:
   - echo yes | sdkmanager "extras;m2repository;com;android;support;constraint;constraint-layout-solver;1.0.2"
   - echo yes | sdkmanager "system-images;android-23;google_apis;armeabi-v7a"
   - echo "$PATH"
-  - shopt -s dotglob
-  - mkdir android-sdk
-  - mv /usr/local/android-sdk-24.0.2/* android-sdk/
+#  - shopt -s dotglob
+#  - mkdir android-sdk
+#  - mv /usr/local/android-sdk-24.0.2/* android-sdk/
   - ls -Al
-  - ls android-sdk -Al
-  - ls android-sdk/tools -Al
-  - ls android-sdk/tools/emulator -Al
-  - ls android-sdk/tools/bin -Al
+  - ls ${ANDROID_HOME} -Al
+  - ls ${TOOLS} -Al
+  - ls ${TOOLS}/emulator -Al
+  - ls ${TOOLS}/bin -Al
   - ls /home/travis/.android/ -Al
   - ls /home/travis/.android/avd/ -Al
   - ls /home/travis/.android/cache/ -Al
