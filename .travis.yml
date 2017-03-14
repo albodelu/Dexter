@@ -8,14 +8,11 @@ android:
     - build-tools-25.0.2
     - platform-tools
     - tools
-    - android-23
-    - android-25
-    - sys-img-armeabi-v7a-google_apis-23
 
 env:
   global:
     - ANDROID_HOME=${TRAVIS_BUILD_DIR}/android-sdk
-    - PATH=${ANDROID_HOME}/:${ANDROID_HOME}/tools/:${ANDROID_HOME}/tools/bin:${ANDROID_HOME}/platform-tools/:/usr/local/android-sdk-24.0.2/tools/bin:${PATH}
+    - PATH=${ANDROID_HOME}/:${ANDROID_HOME}/tools/:${ANDROID_HOME}/tools/bin:${ANDROID_HOME}/platform-tools/:${PATH}
     - EMULATOR="system-images;android-23;google_apis;armeabi-v7a"
 
 before_install:
@@ -39,12 +36,13 @@ before_install:
   - sdkmanager --uninstall "platforms;android-21"
   - sdkmanager --uninstall "build-tools;21.1.2"
 #  - echo yes | sdkmanager "tools"
+  - echo yes | sdkmanager "platforms;android-23"
+  - echo yes | sdkmanager "platforms;android-25"
   - echo yes | sdkmanager "extras;android;m2repository"
   - echo yes | sdkmanager "extras;google;m2repository"
   - echo yes | sdkmanager "extras;m2repository;com;android;support;constraint;constraint-layout;1.0.2"
   - echo yes | sdkmanager "extras;m2repository;com;android;support;constraint;constraint-layout-solver;1.0.2"
-  - sdkmanager --list || true
-  - avdmanager list || true
+  - echo yes | sdkmanager "system-images;android-23;google_apis;armeabi-v7a"
   - echo "$PATH"
   - shopt -s dotglob
   - mkdir android-sdk
@@ -59,6 +57,9 @@ before_install:
   - cat /home/travis/.android/repositories.cfg || true
   - echo 'Hello, world.' > repositories.cfg
   - cat /home/travis/.android/repositories.cfg || true
+  - sdkmanager --list || true
+#  - avdmanager list || true
+
 before_script:
 #  - echo no | avdmanager create avd -n test -k "$EMULATOR" -f --abi armeabi-v7a
   - echo no | android create avd --force -n test -t android-23 --abi armeabi-v7a --tag google_apis
