@@ -12,7 +12,9 @@ android:
 env:
   global:
     - ANDROID_HOME=${TRAVIS_BUILD_DIR}/android-sdk
-    - PATH=${ANDROID_HOME}/:${ANDROID_HOME}/tools/:${ANDROID_HOME}/tools/bin:${ANDROID_HOME}/platform-tools/:/usr/local/android-sdk-24.0.2/tools/bin:${PATH}
+    - TOOLS=${ANDROID_HOME}/tools
+    - TEMP=${ANDROID_HOME}/:${TOOLS}/:${TOOLS}/bin:${TOOLS}/emulator:${ANDROID_HOME}/platform-tools/
+    - PATH=${TEMP}:/usr/local/android-sdk-24.0.2/tools/bin:/usr/local/android-sdk-24.0.2/tools/emulator:${PATH}
     - EMULATOR="system-images;android-23;google_apis;armeabi-v7a"
 
 before_install:
@@ -50,12 +52,13 @@ before_install:
   - ls -Al
   - ls android-sdk -Al
   - ls android-sdk/tools -Al
+  - ls android-sdk/tools/emulator -Al
   - ls android-sdk/tools/bin -Al
   - ls /home/travis/.android/ -Al
   - ls /home/travis/.android/avd/ -Al
   - ls /home/travis/.android/cache/ -Al
   - cat /home/travis/.android/repositories.cfg || true
-  - echo 'Hello, world.' > repositories.cfg
+  - echo 'count=0' > /home/travis/.android/repositories.cfg
   - cat /home/travis/.android/repositories.cfg || true
   - sdkmanager --list || true
 #  - avdmanager list || true
