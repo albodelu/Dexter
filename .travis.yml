@@ -18,7 +18,7 @@ env:
     - TOOLS=${ANDROID_HOME}/tools
     - TEMP=${ANDROID_HOME}:${TOOLS}:${TOOLS}/bin:${TOOLS}/emulator:${ANDROID_HOME}/platform-tools
     - PATH=${TEMP}:${PATH}
-    - EMULATOR="system-images;android-25;google_apis;armeabi-v7a"
+    - EMULATOR="system-images;android-25;default;armeabi-v7a"
 
 before_install:
   - echo 'count=0' > /home/travis/.android/repositories.cfg # Avoid warning
@@ -41,7 +41,7 @@ before_install:
   - sdkmanager --uninstall "platforms;android-20"
   - sdkmanager --uninstall "platforms;android-21"
   - sdkmanager --uninstall "build-tools;21.1.2"
-#  - echo yes | sdkmanager "tools"
+  - echo yes | sdkmanager "tools" # Update sdk tools to revision 25.3.1
   - echo yes | sdkmanager "platforms;android-25"
   - echo yes | sdkmanager "extras;android;m2repository"
   - echo yes | sdkmanager "extras;google;m2repository"
@@ -65,8 +65,8 @@ before_install:
   - avdmanager list || true
 
 before_script:
-#  - echo no | avdmanager create avd -n test -k "$EMULATOR" -f --abi armeabi-v7a
-  - echo no | android create avd --force -n test -t android-25 --abi armeabi-v7a
+  - echo no | avdmanager create avd -n test -k "$EMULATOR" -f --abi armeabi-v7a
+#  - echo no | android create avd --force -n test -t android-25 --abi armeabi-v7a
   - set QEMU_AUDIO_DRV=none
   - emulator -avd test -no-skin -no-window &
   - android-wait-for-emulator
