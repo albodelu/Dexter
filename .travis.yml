@@ -83,7 +83,7 @@ before_script:
 #  - mv libstdc++.so.6 libstdc++.so.6.bak
 #  - ln -s /usr/lib64/lib6stdc++.so.6 ${TOOLS}/lib64/libstdc++
   - cd ${TOOLS}
-  - ./emulator -use-system-libs -avd test -no-skin -no-window &
+  - ./emulator -use-system-libs -avd test -no-skin -no-window -no-audio &
   - android-wait-for-emulator
   - adb shell settings put global window_animation_scale 0 &
   - adb shell settings put global transition_animation_scale 0 &
