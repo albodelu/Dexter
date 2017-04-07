@@ -65,7 +65,7 @@ before_install:
   - avdmanager list || true
 
 before_script:
-  - echo no | avdmanager create avd -n test -k "$EMULATOR" -f
+  - echo no | avdmanager create avd -n test -k "$EMULATOR" -f --tag google_apis
 #  - echo no | android create avd --force -n test -t android-25 --abi armeabi-v7a
   - set QEMU_AUDIO_DRV=none
   - emulator -avd test -no-skin -no-window &
