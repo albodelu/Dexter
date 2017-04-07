@@ -12,4 +12,4 @@ DIR="$( cd -P "$( dirname "$SOURCE" )" && pwd )"
 
 #echo "DIR is '$DIR'"
 #If you want audio pass QEMU_AUDIO_DRV=pa -> https://www.wagner.pp.ru/fossil/vws/wiki?name=QEMU+audio
-export QEMU_AUDIO_DRV=none && $DIR/emulator.orig -use-system-libs "$@" -qemu -m 512 -enable-kvm
+export QEMU_AUDIO_DRV=none && $DIR/emulator.orig -use-system-libs "$@" -qemu -m 512
