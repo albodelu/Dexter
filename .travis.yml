@@ -69,8 +69,9 @@ before_script:
   - echo no | avdmanager create avd -n test -k "$EMULATOR" -f --tag google_apis
 #  - echo no | android create avd --force -n test -t android-25 --abi armeabi-v7a
   - set QEMU_AUDIO_DRV=none
+  - ln -s /usr/lib/x86_64-linux-gnu/libpulse.so.0 /usr/lib/x86_64-linux-gnu/libpulse.so || true
   - cd ${TOOLS}
-  - ./emulator -use-system-libs -avd test -no-skin -no-window &
+  - ./emulator -use-system-libs -avd test -no-window &
   - android-wait-for-emulator
   - adb shell settings put global window_animation_scale 0 &
   - adb shell settings put global transition_animation_scale 0 &
