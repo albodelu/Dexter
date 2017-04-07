@@ -55,6 +55,7 @@ before_install:
   - ls ${ANDROID_HOME}/licenses -Al
   - ls ${ANDROID_HOME}/system-images -Al
   - ls ${ANDROID_HOME}/system-images/android-25 -Al || true
+  - ls ${ANDROID_HOME}/emulator -Al
   - ls ${TOOLS} -Al
   - ls ${TOOLS}/emulator -Al
   - ls ${TOOLS}/bin -Al
@@ -68,7 +69,8 @@ before_script:
   - echo no | avdmanager create avd -n test -k "$EMULATOR" -f --tag google_apis
 #  - echo no | android create avd --force -n test -t android-25 --abi armeabi-v7a
   - set QEMU_AUDIO_DRV=none
-  - emulator -avd test -no-skin -no-window &
+  - cd ${TOOLS}
+  - ./emulator -avd test -no-skin -no-window &
   - android-wait-for-emulator
   - adb shell settings put global window_animation_scale 0 &
   - adb shell settings put global transition_animation_scale 0 &
