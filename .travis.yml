@@ -19,9 +19,7 @@ addons:
     packages:
     - gcc-4.9
     - g++-4.9
-    - lib64gcc1:i386
-    - libc6-amd64:i386
-    - lib64stdc++6:i386
+    - mesa-utils
 
 env:
   global:
