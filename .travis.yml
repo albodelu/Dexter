@@ -28,6 +28,7 @@ env:
     - PATH=${ANDROID_HOME}:${ANDROID_HOME}/emulator:${TOOLS}:${TOOLS}/bin:${ANDROID_HOME}/platform-tools:${PATH}
     - EMULATOR="system-images;android-25;google_apis;armeabi-v7a"
     - LD_LIBRARY_PATH=/usr/local/lib64/:${LD_LIBRARY_PATH}
+    - QEMU_AUDIO_DRV=alsa
 
 before_install:
   - echo 'count=0' > /home/travis/.android/repositories.cfg # Avoid warning
@@ -77,7 +78,7 @@ before_install:
 before_script:
   - echo no | avdmanager create avd -n test -k "$EMULATOR" -f --tag google_apis
 #  - echo no | android create avd --force -n test -t android-25 --abi armeabi-v7a
-#  - set QEMU_AUDIO_DRV=none
+  - set QEMU_AUDIO_DRV=alsa
   - ln -s /usr/lib/x86_64-linux-gnu/libpulse.so.0 /usr/lib/x86_64-linux-gnu/libpulse.so || true
 #  - cd ${TOOLS}/lib64/libstdc++
 #  - mv libstdc++.so.6 libstdc++.so.6.bak
