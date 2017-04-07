@@ -88,8 +88,9 @@ before_script:
 #  - cd ${TOOLS}
 #  - mv emulator emulator.orig
 #  - mv ${TRAVIS_BUILD_DIR}/emulator .
-  - export QEMU_AUDIO_DRV=none && emulator -use-system-libs -avd test -no-skin -no-window -no-audio &
+  - export QEMU_AUDIO_DRV=none && emulator -use-system-libs -avd test -no-skin -no-window -no-audio -no-boot-anim &
   - android-wait-for-emulator
+  - sleep 8
   - adb shell settings put global window_animation_scale 0 &
   - adb shell settings put global transition_animation_scale 0 &
   - adb shell settings put global animator_duration_scale 0 &
