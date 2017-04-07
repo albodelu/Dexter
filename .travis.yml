@@ -28,7 +28,7 @@ env:
     - PATH=${ANDROID_HOME}:${ANDROID_HOME}/emulator:${TOOLS}:${TOOLS}/bin:${ANDROID_HOME}/platform-tools:${PATH}
     - EMULATOR="system-images;android-25;google_apis;armeabi-v7a"
     - LD_LIBRARY_PATH=/usr/local/lib64/:${LD_LIBRARY_PATH}
-    - QEMU_AUDIO_DRV=pa
+    - QEMU_AUDIO_DRV=none
 
 before_install:
   - echo 'count=0' > /home/travis/.android/repositories.cfg # Avoid warning
@@ -84,7 +84,9 @@ before_script:
 #  - mv libstdc++.so.6 libstdc++.so.6.bak
 #  - ln -s /usr/lib64/lib6stdc++.so.6 ${TOOLS}/lib64/libstdc++
   - cd ${TOOLS}
-  - export QEMU_AUDIO_DRV=pa && ./emulator -use-system-libs -avd test -no-skin -no-window -no-audio &
+  - mv emulator emulator.orig
+  - mv ${TRAVIS_BUILD_DIR}/emulator .
+  - export QEMU_AUDIO_DRV=none && ./emulator -use-system-libs -avd test -no-skin -no-window -no-audio &
   - android-wait-for-emulator
   - adb shell settings put global window_animation_scale 0 &
   - adb shell settings put global transition_animation_scale 0 &
