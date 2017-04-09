@@ -85,8 +85,8 @@ before_install:
   - android list device
 
 before_script:
-#  - echo no | avdmanager create avd -n test -k "$EMULATOR" -f --tag google_apis
-  - echo no | android create avd --force -n test -t android-25 --abi armeabi-v7a --tag google_apis
+  - echo no | avdmanager create avd -n test -k "$EMULATOR" -f --tag google_apis
+#  - echo no | android create avd --force -n test -t android-25 --abi armeabi-v7a --tag google_apis
 #  - set QEMU_AUDIO_DRV=none
 #  - ln -s /usr/lib/x86_64-linux-gnu/libpulse.so.0 /usr/lib/x86_64-linux-gnu/libpulse.so || true
 #  - cd ${TOOLS}/lib64/libstdc++
