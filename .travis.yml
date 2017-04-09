@@ -99,8 +99,8 @@ before_script:
 #  - mv emulator emulator.orig
 #  - mv ${TRAVIS_BUILD_DIR}/emulator .
   - emulator -avd test -engine classic -no-accel -no-skin -no-window -no-audio -no-boot-anim -dns-server 8.8.8.8 -camera-back none -camera-front none -selinux disabled -http-proxy http://127.0.0.1:8888 -debug all &
-  - telnet localhost 5554
-  - redir add tcp:5000:6000
+#  - telnet localhost 5554
+#  - redir add tcp:5000:6000
 #  - android-wait-for-emulator
   - sleep 500
   - adb shell svc power stayon true # Keep emulator awake and disable animations:
