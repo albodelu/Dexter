@@ -96,7 +96,10 @@ before_script:
 #  - mv emulator emulator.orig
 #  - mv ${TRAVIS_BUILD_DIR}/emulator .
   - export QEMU_AUDIO_DRV=none && emulator -avd test -engine classic -no-accel -no-skin -no-window -no-audio -no-boot-anim -dns-server 8.8.8.8 -camera-back none -camera-front none -debug all &
-  - android-wait-for-emulator
+  - telnet localhost 5554
+  - redir add tcp:5000:6000
+#  - android-wait-for-emulator
+  - sleep 500
   - adb shell svc power stayon true # Keep emulator awake and disable animations:
   - adb shell settings put global window_animation_scale 0 &
   - adb shell settings put global transition_animation_scale 0 &
