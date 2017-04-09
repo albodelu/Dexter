@@ -96,11 +96,11 @@ before_script:
 #  - mv ${TRAVIS_BUILD_DIR}/emulator .
   - export QEMU_AUDIO_DRV=none && emulator -use-system-libs -avd test -no-skin -no-window -no-audio -no-boot-anim -dns-server 8.8.8.8 -camera-back none -camera-front none -verbose &
   - android-wait-for-emulator
-  - sleep 8
+  - adb shell svc power stayon true # Keep emulator awake and disable animations:
   - adb shell settings put global window_animation_scale 0 &
   - adb shell settings put global transition_animation_scale 0 &
   - adb shell settings put global animator_duration_scale 0 &
-  - adb shell input keyevent 82 &
+  - sleep 30
 
 script:
   ./gradlew checkstyle build connectedCheck
