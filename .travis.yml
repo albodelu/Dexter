@@ -30,6 +30,7 @@ env:
 #    - LD_LIBRARY_PATH=/usr/local/lib64/:${LD_LIBRARY_PATH}
     - QEMU_AUDIO_DRV=none
     - USE_SDK_WRAPPER=y
+    - ANDROID_EMULATOR_USE_SYSTEM_LIBS=1
 
 before_install:
   - echo 'count=0' > /home/travis/.android/repositories.cfg # Avoid warning
@@ -94,7 +95,7 @@ before_script:
 #  - cd ${TOOLS}
 #  - mv emulator emulator.orig
 #  - mv ${TRAVIS_BUILD_DIR}/emulator .
-  - export QEMU_AUDIO_DRV=none && emulator -use-system-libs -avd test -no-skin -no-window -no-audio -no-boot-anim -dns-server 8.8.8.8 -camera-back none -camera-front none -verbose &
+  - export QEMU_AUDIO_DRV=none && emulator -avd test -force-32bit -no-skin -no-window -no-audio -no-boot-anim -dns-server 8.8.8.8 -camera-back none -camera-front none -verbose &
   - android-wait-for-emulator
   - adb shell svc power stayon true # Keep emulator awake and disable animations:
   - adb shell settings put global window_animation_scale 0 &
