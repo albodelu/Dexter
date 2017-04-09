@@ -23,7 +23,7 @@ env:
     - ANDROID_HOME=/usr/local/android-sdk-24.0.2 # Depends on the cookbooks version sued in th VM
     - TOOLS=${ANDROID_HOME}/tools
     - PATH=${ANDROID_HOME}:${ANDROID_HOME}/emulator:${TOOLS}:${TOOLS}/bin:${ANDROID_HOME}/platform-tools:${PATH}
-    - EMULATOR="system-images;android-25;google_apis;armeabi-v7a"
+    - EMULATOR="system-images;android-24;google_apis;armeabi-v7a"
     - QEMU_AUDIO_DRV=none
     - USE_SDK_WRAPPER=y # Avoid prompt using legacy android script, currently unused, can be removed
     - ANDROID_EMULATOR_USE_SYSTEM_LIBS=1
@@ -50,12 +50,12 @@ before_install:
   - sdkmanager --uninstall "platforms;android-21"
   - sdkmanager --uninstall "build-tools;21.1.2"
   - echo yes | sdkmanager "tools" # Update sdk tools to latest version and install/update components
-  - echo yes | sdkmanager "platforms;android-25"
+  - echo yes | sdkmanager "platforms;android-24"
   - echo yes | sdkmanager "extras;android;m2repository"
   - echo yes | sdkmanager "extras;google;m2repository"
   - echo yes | sdkmanager "extras;m2repository;com;android;support;constraint;constraint-layout;1.0.2"
   - echo yes | sdkmanager "extras;m2repository;com;android;support;constraint;constraint-layout-solver;1.0.2"
-  - echo yes | sdkmanager "system-images;android-25;google_apis;armeabi-v7a"
+  - echo yes | sdkmanager "system-images;android-24;google_apis;armeabi-v7a"
   - sdkmanager --list || true # Check components status
   - avdmanager list || true
   - android --help || true
