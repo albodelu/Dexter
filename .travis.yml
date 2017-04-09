@@ -8,7 +8,6 @@ android:
     - build-tools-25.0.2 # Match build-tools version used in build.gradle
     - platform-tools # Update platform-tools to revision 25.0.3+
     - tools # Update tools from revision 24.4.1 to 25.2.5
-#    - android-23
 #    - android-25
 #    - sys-img-armeabi-v7a-google_apis-23
 
@@ -53,7 +52,7 @@ before_install:
   - sdkmanager --uninstall "platforms;android-20"
   - sdkmanager --uninstall "platforms;android-21"
   - sdkmanager --uninstall "build-tools;21.1.2"
-  - echo yes | sdkmanager "tools" # Update sdk tools to revision 25.3.1
+  - echo yes | sdkmanager "tools" # Update sdk tools to latest version
   - echo yes | sdkmanager "platforms;android-25"
   - echo yes | sdkmanager "extras;android;m2repository"
   - echo yes | sdkmanager "extras;google;m2repository"
@@ -86,20 +85,16 @@ before_install:
 
 before_script:
   - echo no | avdmanager create avd -n test2 -k "$EMULATOR" -f --tag google_apis
-#  - echo no | android create avd --force -n test -t android-25 --abi armeabi-v7a --tag google_apis
-#  - set QEMU_AUDIO_DRV=none
 #  - ln -s /usr/lib/x86_64-linux-gnu/libpulse.so.0 /usr/lib/x86_64-linux-gnu/libpulse.so || true
 #  - cd ${TOOLS}/lib64/libstdc++
 #  - mv libstdc++.so.6 libstdc++.so.6.bak
 #  - ln -s /usr/lib64/lib6stdc++.so.6 ${TOOLS}/lib64/libstdc++
 #  - cd ${TOOLS}
-#  - mv emulator emulator.orig
-#  - mv ${TRAVIS_BUILD_DIR}/emulator .
-  - emulator -avd test2 -engine classic -no-accel -no-skin -no-window -no-audio -no-boot-anim -dns-server 8.8.8.8 -camera-back none -camera-front none -selinux disabled -http-proxy http://127.0.0.1:8888 -verbose &
+  - emulator -avd test2 -engine classic -no-accel -no-skin -no-window -no-audio -no-boot-anim -dns-server 8.8.8.8 -camera-back none -camera-front none -selinux disabled -http-proxy http://127.0.0.1:8888 -qemu -m 512 -verbose &
 #  - sudo telnet 127.0.0.1 5554
 #  - redir add tcp:5000:6000
   - android-wait-for-emulator
-  - sleep 8
+  - sleep 15
   - adb shell settings put global window_animation_scale 0 &
   - adb shell settings put global transition_animation_scale 0 &
   - adb shell settings put global animator_duration_scale 0 &
