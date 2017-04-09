@@ -96,8 +96,8 @@ before_script:
 #  - mv emulator emulator.orig
 #  - mv ${TRAVIS_BUILD_DIR}/emulator .
   - emulator -avd test2 -engine classic -no-accel -no-skin -no-window -no-audio -no-boot-anim -dns-server 8.8.8.8 -camera-back none -camera-front none -selinux disabled -http-proxy http://127.0.0.1:8888 -verbose &
-  - sudo telnet 127.0.0.1 5554
-  - redir add tcp:5000:6000
+#  - sudo telnet 127.0.0.1 5554
+#  - redir add tcp:5000:6000
   - android-wait-for-emulator
   - sleep 8
   - adb shell settings put global window_animation_scale 0 &
