@@ -76,7 +76,7 @@ before_install:
   - avdmanager list || true
   - sdkmanager --uninstall "emulator"
   - echo yes | sdkmanager "emulator"
-  - android list --help
+  - android --help
   - android list sdk
   - android list avd
   - android list target
