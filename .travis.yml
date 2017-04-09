@@ -85,7 +85,7 @@ before_install:
   - android list device
 
 before_script:
-  - echo no | avdmanager create avd -n test -k "$EMULATOR" -f --tag google_apis
+  - echo no | avdmanager create avd -n test2 -k "$EMULATOR" -f --tag google_apis
 #  - echo no | android create avd --force -n test -t android-25 --abi armeabi-v7a --tag google_apis
 #  - set QEMU_AUDIO_DRV=none
 #  - ln -s /usr/lib/x86_64-linux-gnu/libpulse.so.0 /usr/lib/x86_64-linux-gnu/libpulse.so || true
@@ -95,16 +95,16 @@ before_script:
 #  - cd ${TOOLS}
 #  - mv emulator emulator.orig
 #  - mv ${TRAVIS_BUILD_DIR}/emulator .
-  - emulator -avd test -engine classic -no-accel -no-skin -no-window -no-audio -no-boot-anim -dns-server 8.8.8.8 -camera-back none -camera-front none -selinux disabled -http-proxy http://127.0.0.1:8888 -verbose &
+  - emulator -avd test2 -engine classic -no-accel -no-skin -no-window -no-audio -no-boot-anim -dns-server 8.8.8.8 -camera-back none -camera-front none -selinux disabled -http-proxy http://127.0.0.1:8888 -verbose &
   - sudo telnet 127.0.0.1 5554
   - redir add tcp:5000:6000
-#  - android-wait-for-emulator
-  - sleep 500
-  - adb shell svc power stayon true # Keep emulator awake and disable animations:
+  - android-wait-for-emulator
+  - sleep 8
   - adb shell settings put global window_animation_scale 0 &
   - adb shell settings put global transition_animation_scale 0 &
   - adb shell settings put global animator_duration_scale 0 &
-  - sleep 30
+  - adb shell input keyevent 82 &
+
 
 script:
   ./gradlew checkstyle build connectedCheck
