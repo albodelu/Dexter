@@ -60,39 +60,32 @@ before_install:
   - echo yes | sdkmanager "extras;m2repository;com;android;support;constraint;constraint-layout-solver;1.0.2"
   - echo yes | sdkmanager "system-images;android-25;google_apis;armeabi-v7a"
   - echo "$PATH"
-  - ls -Al
-  - ls /usr/local/android-sdk -Al
-  - ls ${ANDROID_HOME} -Al
-  - ls ${ANDROID_HOME}/licenses -Al
-  - ls ${ANDROID_HOME}/system-images -Al
-  - ls ${ANDROID_HOME}/system-images/android-25 -Al || true
-  - ls ${ANDROID_HOME}/emulator -Al
-  - ls ${TOOLS} -Al
-  - ls ${TOOLS}/emulator -Al
-  - ls ${TOOLS}/bin -Al
-  - ls /home/travis/.android/ -Al
-  - ls /home/travis/.android/avd/ -Al
-  - ls /home/travis/.android/cache/ -Al
+#  - ls -Al
+#  - ls /usr/local/android-sdk -Al
+#  - ls ${ANDROID_HOME} -Al
+#  - ls ${ANDROID_HOME}/licenses -Al
+#  - ls ${ANDROID_HOME}/system-images -Al
+#  - ls ${ANDROID_HOME}/system-images/android-25 -Al || true
+#  - ls ${ANDROID_HOME}/emulator -Al
+#  - ls ${TOOLS} -Al
+#  - ls ${TOOLS}/emulator -Al
+#  - ls ${TOOLS}/bin -Al
+#  - ls /home/travis/.android/ -Al
+#  - ls /home/travis/.android/avd/ -Al
+#  - ls /home/travis/.android/cache/ -Al
   - sdkmanager --list || true
   - avdmanager list || true
-  - sdkmanager --uninstall "emulator"
-  - echo yes | sdkmanager "emulator"
-  - android --help || true
-  - android list sdk
-  - android list avd
-  - android list target
-  - android list device
+#  - sdkmanager --uninstall "emulator"
+#  - echo yes | sdkmanager "emulator"
+#  - android --help || true
+#  - android list sdk
+#  - android list avd
+#  - android list target
+#  - android list device
 
 before_script:
   - echo no | avdmanager create avd -n test2 -k "$EMULATOR" -f --tag google_apis
-#  - ln -s /usr/lib/x86_64-linux-gnu/libpulse.so.0 /usr/lib/x86_64-linux-gnu/libpulse.so || true
-#  - cd ${TOOLS}/lib64/libstdc++
-#  - mv libstdc++.so.6 libstdc++.so.6.bak
-#  - ln -s /usr/lib64/lib6stdc++.so.6 ${TOOLS}/lib64/libstdc++
-#  - cd ${TOOLS}
   - emulator -avd test2 -engine classic -no-accel -no-skin -no-window -no-audio -no-boot-anim -dns-server 8.8.8.8 -camera-back none -camera-front none -selinux disabled -http-proxy http://127.0.0.1:8888 -verbose -qemu -m 512 &
-#  - sudo telnet 127.0.0.1 5554
-#  - redir add tcp:5000:6000
   - android-wait-for-emulator
   - sleep 15
   - adb shell settings put global window_animation_scale 0 &
