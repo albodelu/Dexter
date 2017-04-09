@@ -1,8 +1,5 @@
 language: android
-jdk:
-  - oraclejdk8
-  - oraclejdk7
-  - openjdk8
+jdk: oraclejdk8
 sudo: required
 
 android:
@@ -98,7 +95,7 @@ before_script:
 #  - cd ${TOOLS}
 #  - mv emulator emulator.orig
 #  - mv ${TRAVIS_BUILD_DIR}/emulator .
-  - emulator -avd test -engine classic -no-accel -no-skin -no-window -no-audio -no-boot-anim -dns-server 8.8.8.8 -camera-back none -camera-front none -selinux disabled -http-proxy http://127.0.0.1:8888 -debug all &
+  - emulator -avd test -engine classic -no-accel -no-skin -no-window -no-audio -no-boot-anim -dns-server 8.8.8.8 -camera-back none -camera-front none -selinux disabled -http-proxy http://127.0.0.1:8888 -verbose &
   - telnet 127.0.0.1 5554
   - redir add tcp:5000:6000
 #  - android-wait-for-emulator
