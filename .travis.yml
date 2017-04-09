@@ -76,6 +76,10 @@ before_install:
   - avdmanager list || true
   - sdkmanager --uninstall "emulator"
   - echo yes | sdkmanager "emulator"
+  - android list
+  - android list avd
+  - android list target
+  - android list device
 
 before_script:
   - echo no | avdmanager create avd -n test -k "$EMULATOR" -f --tag google_apis
