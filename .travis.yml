@@ -27,7 +27,7 @@ env:
     - TOOLS=${ANDROID_HOME}/tools
     - PATH=${ANDROID_HOME}:${ANDROID_HOME}/emulator:${TOOLS}:${TOOLS}/bin:${ANDROID_HOME}/platform-tools:${PATH}
     - EMULATOR="system-images;android-25;google_apis;armeabi-v7a"
-    - LD_LIBRARY_PATH=/usr/local/lib64/:${LD_LIBRARY_PATH}
+#    - LD_LIBRARY_PATH=/usr/local/lib64/:${LD_LIBRARY_PATH}
     - QEMU_AUDIO_DRV=none
     - USE_SDK_WRAPPER=y
 
