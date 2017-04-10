@@ -11,7 +11,7 @@ android: # ACIB CI Bridge for Android
 
 env:
   global:
-    - API=25 # Android API level 25 by default
+    - API=21 # Android API level 21 by default
     - TAG=google_apis # Google APIs by default, alternatively use default
     - ABI=armeabi-v7a # ARM ABI v7a by default
     - ANDROID_HOME=/usr/local/android-sdk-24.0.2 # Depends on the cookbooks version used in the VM
@@ -21,10 +21,10 @@ env:
 
 matrix:
   include: # More Emulator API levels to create a build matrix
-    - env: API=24
-    - env: API=23
-    - env: API=22
-    - env: API=19
+    - env: API=18
+    - env: API=17
+    - env: API=16
+    - env: API=15
 
 before_install:
   - export EMULATOR="system-images;android-${API};${TAG};${ABI}"
