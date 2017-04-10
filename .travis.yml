@@ -9,13 +9,6 @@ android: # ACIB CI Bridge for Android
     - platform-tools # Update platform-tools to revision 25.0.3+
     - tools # Update tools from revision 24.4.1 to 25.2.5
 
-addons:
-  apt:
-    sources:
-    - ubuntu-toolchain-r-test
-    packages: # Install missing packages
-    - mesa-utils
-
 env:
   global:
     - ANDROID_API=android-25 # Emulator API level, change this to test other platforms
