@@ -21,10 +21,10 @@ env:
 
 matrix:
   include: # More Emulator API levels to create a build matrix
-    - env: API=21
-    - env: API=18
-    - env: API=17
-    - env: API=16
+    - env: API=24
+    - env: API=23
+    - env: API=22
+    - env: API=19
 
 before_install:
   - export EMULATOR="system-images;android-${API};${TAG};${ABI}" # Used to install/create emulator
