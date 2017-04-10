@@ -20,6 +20,17 @@ env:
     # - USE_SDK_WRAPPER=y # Avoid prompt using legacy android script
     # - ANDROID_EMULATOR_USE_SYSTEM_LIBS=1
 
+matrix:
+  include:
+    - env: ANDROID_API=android-19
+    - env: ANDROID_API=android-22
+    - env: ANDROID_API=android-23
+    - env: ANDROID_API=android-24
+    - env: ANDROID_API=android-25
+#  allow_failures:
+#    - env: ANDROID_API=android-25
+  fast_finish: false
+
 before_install:
   - echo 'count=0' > /home/travis/.android/repositories.cfg # Avoid warning
   - sdkmanager --list || true
