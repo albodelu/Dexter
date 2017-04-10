@@ -67,7 +67,7 @@ before_install:
 
 before_script:
   - echo no | avdmanager create avd -n acib -k "$EMULATOR" -f --abi armeabi-v7a --tag google_apis
-  - emulator -avd acib -engine classic -no-window -no-boot-anim -dns-server 8.8.8.8 -camera-back none -camera-front none -http-proxy http://127.0.0.1:8888 -verbose -qemu -m 512 &
+  - emulator -avd acib -engine classic -no-window -no-boot-anim -dns-server 8.8.8.8 -http-proxy http://127.0.0.1:8888 -verbose -qemu -m 512 &
   - android-wait-for-emulator
   - adb shell settings put global window_animation_scale 0 &
   - adb shell settings put global transition_animation_scale 0 &
