@@ -17,14 +17,14 @@ env:
     - ANDROID_HOME=/usr/local/android-sdk-24.0.2 # Depends on the cookbooks version used in the VM
     - TOOLS=${ANDROID_HOME}/tools
     - PATH=${ANDROID_HOME}:${ANDROID_HOME}/emulator:${TOOLS}:${TOOLS}/bin:${ANDROID_HOME}/platform-tools:${PATH}
-    # - QEMU_AUDIO_DRV=none # Avoid warning/error
+    - QEMU_AUDIO_DRV=none # Avoid warning/error
 
 matrix:
   include: # More Emulator API levels to create a build matrix
-    - env: API=19
-    - env: API=22
-    - env: API=23
     - env: API=24
+    - env: API=23
+    - env: API=22
+    - env: API=19
 
 before_install:
   - export EMULATOR="system-images;android-${API};${TAG};${ABI}"
