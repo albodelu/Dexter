@@ -16,11 +16,10 @@ addons:
     packages: # Install missing packages
     - gcc-4.9
     - g++-4.9
-    - mesa-utils
 
 env:
   global:
-    - ANDROID_API=android-19 # Emulator API level, change this to test other platforms
+    - ANDROID_API=android-25 # Emulator API level, change this to test other platforms
     - ANDROID_HOME=/usr/local/android-sdk-24.0.2 # Depends on the cookbooks version used in the VM
     - TOOLS=${ANDROID_HOME}/tools
     - PATH=${ANDROID_HOME}:${ANDROID_HOME}/emulator:${TOOLS}:${TOOLS}/bin:${ANDROID_HOME}/platform-tools:${PATH}
