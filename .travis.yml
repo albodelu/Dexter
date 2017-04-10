@@ -2,7 +2,7 @@ language: android
 jdk: oraclejdk8
 sudo: required
 
-android:
+android: # ACIB CI Bridge for Android
   components: # Cookbooks version: https://github.com/travis-ci/travis-cookbooks/tree/9c6cd11
     - tools # Update preinstalled tools from revision 24.0.2 to 24.4.1
     - build-tools-25.0.2 # Match build-tools version used in build.gradle
@@ -26,8 +26,8 @@ env:
     - PATH=${ANDROID_HOME}:${ANDROID_HOME}/emulator:${TOOLS}:${TOOLS}/bin:${ANDROID_HOME}/platform-tools:${PATH}
     - EMULATOR="system-images;${ANDROID_API};google_apis;armeabi-v7a"
     - QEMU_AUDIO_DRV=none # Avoid warning/error
-    - USE_SDK_WRAPPER=y # Avoid prompt using legacy android script, currently unused, can be removed
-    - ANDROID_EMULATOR_USE_SYSTEM_LIBS=1
+    # - USE_SDK_WRAPPER=y # Avoid prompt using legacy android script
+    # - ANDROID_EMULATOR_USE_SYSTEM_LIBS=1
 
 before_install:
   - echo 'count=0' > /home/travis/.android/repositories.cfg # Avoid warning
