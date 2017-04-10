@@ -25,7 +25,7 @@ env:
     - TOOLS=${ANDROID_HOME}/tools
     - PATH=${ANDROID_HOME}:${ANDROID_HOME}/emulator:${TOOLS}:${TOOLS}/bin:${ANDROID_HOME}/platform-tools:${PATH}
     - EMULATOR="system-images;${ANDROID_API};google_apis;armeabi-v7a"
-    - QEMU_AUDIO_DRV=none # Avoid warning/error
+    # - QEMU_AUDIO_DRV=none # Avoid warning/error
     # - USE_SDK_WRAPPER=y # Avoid prompt using legacy android script
     # - ANDROID_EMULATOR_USE_SYSTEM_LIBS=1
 
