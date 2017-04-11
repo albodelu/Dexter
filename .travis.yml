@@ -4,6 +4,8 @@ sudo: required # false for Container-Based Infrastructure, required for Sudo-Ena
 
 before_cache:
   - rm -f ${TRAVIS_BUILD_DIR}/gradle/caches/modules-2/modules-2.lock # Avoid to repack it due locks
+  - rm -f ${TRAVIS_BUILD_DIR}/gradle/caches/3.3/classAnalysis/classAnalysis.lock
+  - rm -f ${TRAVIS_BUILD_DIR}/gradle/caches/3.3/jarSnapshots/jarSnapshots.lock
 
 cache:
   directories:
@@ -86,6 +88,8 @@ install:
   - ./gradlew clean
   # Check components status
   - sdkmanager --list || true
+  # Check style
+  ./gradlew checkstyle
 
 before_script:
   # Wait for emulator fully-booted and disable animations
@@ -98,8 +102,8 @@ before_script:
   - sleep 15
 
 script:
-  # Run all device checks and checkstyle
-  ./gradlew checkstyle build connectedCheck
+  # Build and run all device checks
+  ./gradlew build connectedCheck
 
 after_script:
   # Show tests and lint results
